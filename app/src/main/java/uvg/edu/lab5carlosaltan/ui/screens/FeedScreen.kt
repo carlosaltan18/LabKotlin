@@ -5,7 +5,8 @@ Con weight ocupa el espacio sobrante del Row, por lo que el texto se ajusta y la
 
 ¿Por qué tu componente de artículo recibe un Modifier por parámetro en lugar de fijar su propio margen adentro?
 El Modifier deja que cada pantalla decida el margen exterior que necesita para colocar el artículo.
-Así el mismo componente puede reutilizarse con espaciados distintos sin editarlo ni duplicar su código.
+Así el mismo componente puede reutilizarse con espaciados distintos.
+
 */
 package uvg.edu.lab5carlosaltan.ui.screens
 
