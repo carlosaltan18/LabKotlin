@@ -6,7 +6,7 @@ plugins {
 android {
     namespace = "uvg.edu.lab5carlosaltan"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }

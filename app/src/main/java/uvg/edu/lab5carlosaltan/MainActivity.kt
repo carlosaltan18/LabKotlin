@@ -1,3 +1,8 @@
+/*
+ * Asistencia de IA: OpenAI ChatGPT consulta realizada el 6 de agosto de 2026.
+ * Se utilizó como apoyo para organizar la pantalla y aplicar la sintaxis de Jetpack Compose.
+ * Referencia: https://openai.com/codex/
+ */
 package uvg.edu.lab5carlosaltan
 
 import android.os.Bundle
@@ -7,10 +12,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import uvg.edu.lab5carlosaltan.data.ArticleRepository
+import uvg.edu.lab5carlosaltan.ui.screens.FeedScreen
 import uvg.edu.lab5carlosaltan.ui.theme.Lab5CarlosAltanTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +24,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             Lab5CarlosAltanTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    FeedScreen(
+                        articles = ArticleRepository.technologyArticles,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Lab5CarlosAltanTheme {
-        Greeting("Android")
     }
 }
