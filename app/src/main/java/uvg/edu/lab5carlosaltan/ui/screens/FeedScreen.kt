@@ -24,7 +24,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,7 +50,7 @@ fun FeedScreen(
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var showShortReadsOnly by rememberSaveable { mutableStateOf(false) }
     var selectedTab by rememberSaveable { mutableStateOf("Para ti") }
-    var applauseCount by remember { mutableStateOf(0) }
+    var applauseCount by rememberSaveable { mutableStateOf(0) }
 
     val visibleArticles = articles.filter { article ->
         val matchesTab = when (selectedTab) {
@@ -174,7 +173,7 @@ private fun EmptyResults() {
             color = Color(0xFF4B5563)
         )
         Text(
-            text = "Cambia la búsqueda o el filtro.",
+            text = "Cambia la pestaña, la búsqueda o el filtro.",
             color = Color(0xFF6B7280),
             fontSize = 14.sp
         )
