@@ -20,6 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +50,7 @@ fun FeedScreen(
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var showShortReadsOnly by rememberSaveable { mutableStateOf(false) }
     var selectedTab by rememberSaveable { mutableStateOf("Para ti") }
+    var applauseCount = 0
 
     val visibleArticles = articles.filter { article ->
         val matchesTab = when (selectedTab) {
@@ -113,6 +115,17 @@ fun FeedScreen(
                 color = Color(0xFF168AC4),
                 fontSize = 14.sp
             )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            TextButton(onClick = { applauseCount++ }) {
+                Text(text = "Aplaudir · $applauseCount")
+            }
         }
 
         HorizontalDivider(
