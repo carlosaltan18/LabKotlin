@@ -48,13 +48,19 @@ fun FeedScreen(
 ) {
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var showShortReadsOnly by rememberSaveable { mutableStateOf(false) }
+    var selectedTab by rememberSaveable { mutableStateOf("Para ti") }
 
     val visibleArticles = articles.filter { article ->
+        val matchesTab = when (selectedTab) {
+            "Siguiendo" -> article.isAuthorFollowed
+            "Destacados" -> article.isFeatured
+            else -> true
+        }
         val matchesQuery = searchQuery.isBlank() ||
             article.title.contains(searchQuery, ignoreCase = true) ||
             article.author.contains(searchQuery, ignoreCase = true)
         val matchesShortRead = !showShortReadsOnly || article.readingMinutes <= 5
-        matchesQuery && matchesShortRead
+        matchesTab && matchesQuery && matchesShortRead
     }
     val resultCount = visibleArticles.size
 
@@ -66,7 +72,8 @@ fun FeedScreen(
         PublicationHeader(publicationName = "Circuito Humano")
         FeedTabs(
             tabs = listOf("Para ti", "Siguiendo", "Destacados"),
-            selectedTabIndex = 0
+            selectedTab = selectedTab,
+            onTabSelected = { selectedTab = it }
         )
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),

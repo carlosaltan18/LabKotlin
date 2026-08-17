@@ -1,5 +1,6 @@
 package uvg.edu.lab5carlosaltan.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +18,8 @@ import uvg.edu.lab5carlosaltan.ui.theme.Lab5CarlosAltanTheme
 @Composable
 fun FeedTabs(
     tabs: List<String>,
-    selectedTabIndex: Int,
+    selectedTab: String,
+    onTabSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -26,10 +28,12 @@ fun FeedTabs(
             .padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
         tabs.forEachIndexed { index, tab ->
-            val isSelected = index == selectedTabIndex
+            val isSelected = tab == selectedTab
             Text(
                 text = tab,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { onTabSelected(tab) },
                 color = if (isSelected) Color(0xFF17324D) else Color(0xFF6C6C6C),
                 fontSize = 13.sp,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
@@ -45,7 +49,8 @@ private fun FeedTabsPreview() {
     Lab5CarlosAltanTheme(dynamicColor = false) {
         FeedTabs(
             tabs = listOf("Para ti", "Laboratorio", "Futuro"),
-            selectedTabIndex = 0
+            selectedTab = "Para ti",
+            onTabSelected = {}
         )
     }
 }
