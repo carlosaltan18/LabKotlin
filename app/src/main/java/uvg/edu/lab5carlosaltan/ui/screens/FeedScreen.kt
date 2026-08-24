@@ -7,8 +7,8 @@ Con weight ocupa el espacio sobrante del Row, por lo que el texto se ajusta y la
 El Modifier deja que cada pantalla decida el margen exterior que necesita para colocar el artículo.
 Así el mismo componente puede reutilizarse con espaciados distintos.
 
-//LAB 6
-Se utilizo codex para mejorar la implementación del filter de visibleArticles
+// LAB 6
+Se utilizó Codex para mejorar la implementación del filtro de visibleArticles.
 */
 package uvg.edu.lab5carlosaltan.ui.screens
 
@@ -67,20 +67,18 @@ fun FeedScreen(
         val matchesShortRead = !showShortReadsOnly || article.readingMinutes <= 5
         matchesTab && matchesQuery && matchesShortRead
     }
-    val resultCount = visibleArticles.size
-
     FeedContent(
-    visibleArticles = visibleArticles,
-    searchQuery = searchQuery,
-    onSearchQueryChange = { searchQuery = it },
-    showShortReadsOnly = showShortReadsOnly,
-    onShortReadsOnlyChange = { showShortReadsOnly = it },
-    selectedTab = selectedTab,
-    onTabSelected = { selectedTab = it },
-    applauseCount = applauseCount,
-    onApplaud = { applauseCount++ },
-    modifier = modifier,
-)
+        visibleArticles = visibleArticles,
+        searchQuery = searchQuery,
+        onSearchQueryChange = { searchQuery = it },
+        showShortReadsOnly = showShortReadsOnly,
+        onShortReadsOnlyChange = { showShortReadsOnly = it },
+        selectedTab = selectedTab,
+        onTabSelected = { selectedTab = it },
+        applauseCount = applauseCount,
+        onApplaud = { applauseCount++ },
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -94,35 +92,34 @@ fun FeedContent(
     onTabSelected: (String) -> Unit,
     applauseCount: Int,
     onApplaud: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
-     Column(
+    val resultCount = visibleArticles.size
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFFFFFEFC))
     ) {
         PublicationHeader(publicationName = "Circuito Humano")
         FeedTabs(
-    tabs = listOf("Para ti", "Siguiendo", "Destacados"),
-    selectedTab = selectedTab,
-    onTabSelected = onTabSelected
-)
+            tabs = listOf("Para ti", "Siguiendo", "Destacados"),
+            selectedTab = selectedTab,
+            onTabSelected = onTabSelected
+        )
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 1.dp,
             color = Color(0xFFE5E5E5)
         )
-
         OutlinedTextField(
             value = searchQuery,
-    onValueChange = onSearchQueryChange,
+            onValueChange = onSearchQueryChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             label = { Text("Buscar por título o autor") },
             singleLine = true
         )
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,19 +131,21 @@ fun FeedContent(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-               Switch(
-    checked = showShortReadsOnly,
-    onCheckedChange = onShortReadsOnlyChange
-)
-                Text(text = "Solo lecturas cortas", fontSize = 14.sp)
+                Switch(
+                    checked = showShortReadsOnly,
+                    onCheckedChange = onShortReadsOnlyChange
+                )
+                Text(
+                    text = "Solo lecturas cortas",
+                    fontSize = 14.sp
+                )
             }
             Text(
-                text = "$applauseCount ${if (applauseCount == 1) "resultado" else "resultados"}",
+                text = "$resultCount ${if (resultCount == 1) "resultado" else "resultados"}",
                 color = Color(0xFF168AC4),
                 fontSize = 14.sp
             )
         }
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -154,10 +153,9 @@ fun FeedContent(
             horizontalArrangement = Arrangement.End
         ) {
             TextButton(onClick = onApplaud) {
-    Text("Aplaudir · $applauseCount")
-}
+                Text(text = "Aplaudir · $applauseCount")
+            }
         }
-
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -187,6 +185,7 @@ fun FeedContent(
         }
     }
 }
+
 @Composable
 private fun EmptyResults() {
     Column(
