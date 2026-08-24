@@ -106,7 +106,9 @@ private fun ArticleItemPreview() {
                 title = "Ciencias de la computación",
                 excerpt = "Las ciecnias de la computación y su relación con otras ciencias.",
                 readingMinutes = 6,
-                date = "18 ago"
+                date = "18 ago",
+                isAuthorFollowed = true,
+                isFeatured = false
             ),
             avatarColor = Color(0xFFFFA45B),
             thumbnailColor = Color(0xFFE2D4BB)

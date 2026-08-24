@@ -54,3 +54,6 @@ captures/
 # Archivos basura del sistema operativo (Mac y Windows)
 .DS_Store
 Thumbs.db
+
+# Archivos locales de Codex
+/.codex/
