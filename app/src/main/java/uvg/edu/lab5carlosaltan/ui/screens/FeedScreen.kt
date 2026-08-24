@@ -79,7 +79,7 @@ fun FeedScreen(
     onTabSelected = { selectedTab = it },
     applauseCount = applauseCount,
     onApplaud = { applauseCount++ },
-    modifier = modifier
+    modifier = modifier,
 )
 }
 
@@ -94,7 +94,7 @@ fun FeedContent(
     onTabSelected: (String) -> Unit,
     applauseCount: Int,
     onApplaud: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
      Column(
         modifier = modifier
@@ -141,7 +141,7 @@ fun FeedContent(
                 Text(text = "Solo lecturas cortas", fontSize = 14.sp)
             }
             Text(
-                text = "$resultCount ${if (resultCount == 1) "resultado" else "resultados"}",
+                text = "$applauseCount ${if (applauseCount == 1) "resultado" else "resultados"}",
                 color = Color(0xFF168AC4),
                 fontSize = 14.sp
             )
@@ -170,7 +170,7 @@ fun FeedContent(
             EmptyResults()
         } else {
             visibleArticles.forEachIndexed { index, article ->
-                val originalIndex = articles.indexOf(article)
+                val originalIndex = visibleArticles.indexOf(article)
                 ArticleItem(
                     article = article,
                     avatarColor = avatarColors[originalIndex % avatarColors.size],
@@ -216,4 +216,38 @@ private fun FeedScreenPreview() {
         FeedScreen(articles = ArticleRepository.technologyArticles)
     }
 }
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun FeedContentWithResultsPreview() {
+    Lab5CarlosAltanTheme(dynamicColor = false) {
+        FeedContent(
+            visibleArticles = listOf(ArticleRepository.technologyArticles[2]),
+            searchQuery = "Sof",
+            onSearchQueryChange = {},
+            showShortReadsOnly = true,
+            onShortReadsOnlyChange = {},
+            selectedTab = "Destacados",
+            onTabSelected = {},
+            applauseCount = 3,
+            onApplaud = {}
+        )
+    }
+}
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun FeedContentEmptyPreview() {
+    Lab5CarlosAltanTheme(dynamicColor = false) {
+        FeedContent(
+            visibleArticles = emptyList(),
+            searchQuery = "sin coincidencias",
+            onSearchQueryChange = {},
+            showShortReadsOnly = false,
+            onShortReadsOnlyChange = {},
+            selectedTab = "Para ti",
+            onTabSelected = {},
+            applauseCount = 0,
+            onApplaud = {}
+        )
+    }
+}
