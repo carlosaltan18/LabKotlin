@@ -68,18 +68,32 @@ fun FeedScreen(
         matchesTab && matchesQuery && matchesShortRead
     }
     val resultCount = visibleArticles.size
+}
 
-    Column(
+@Composable
+fun FeedContent(
+    visibleArticles: List<Article>,
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    showShortReadsOnly: Boolean,
+    onShortReadsOnlyChange: (Boolean) -> Unit,
+    selectedTab: String,
+    onTabSelected: (String) -> Unit,
+    applauseCount: Int,
+    onApplaud: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFFFFFEFC))
     ) {
         PublicationHeader(publicationName = "Circuito Humano")
         FeedTabs(
-            tabs = listOf("Para ti", "Siguiendo", "Destacados"),
-            selectedTab = selectedTab,
-            onTabSelected = { selectedTab = it }
-        )
+    tabs = listOf("Para ti", "Siguiendo", "Destacados"),
+    selectedTab = selectedTab,
+    onTabSelected = onTabSelected
+)
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 1.dp,
@@ -87,8 +101,7 @@ fun FeedScreen(
         )
 
         OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
+             value = searchQuery,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -107,10 +120,10 @@ fun FeedScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Switch(
-                    checked = showShortReadsOnly,
-                    onCheckedChange = { showShortReadsOnly = it }
-                )
+               Switch(
+    checked = showShortReadsOnly,
+    onCheckedChange = onShortReadsOnlyChange
+)
                 Text(text = "Solo lecturas cortas", fontSize = 14.sp)
             }
             Text(
@@ -126,9 +139,9 @@ fun FeedScreen(
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            TextButton(onClick = { applauseCount++ }) {
-                Text(text = "Aplaudir · $applauseCount")
-            }
+            TextButton(onClick = onApplaud) {
+    Text("Aplaudir · $applauseCount")
+}
         }
 
         HorizontalDivider(
@@ -160,7 +173,6 @@ fun FeedScreen(
         }
     }
 }
-
 @Composable
 private fun EmptyResults() {
     Column(
