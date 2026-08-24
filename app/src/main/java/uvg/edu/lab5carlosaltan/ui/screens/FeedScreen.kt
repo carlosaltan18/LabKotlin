@@ -68,6 +68,19 @@ fun FeedScreen(
         matchesTab && matchesQuery && matchesShortRead
     }
     val resultCount = visibleArticles.size
+
+    FeedContent(
+    visibleArticles = visibleArticles,
+    searchQuery = searchQuery,
+    onSearchQueryChange = { searchQuery = it },
+    showShortReadsOnly = showShortReadsOnly,
+    onShortReadsOnlyChange = { showShortReadsOnly = it },
+    selectedTab = selectedTab,
+    onTabSelected = { selectedTab = it },
+    applauseCount = applauseCount,
+    onApplaud = { applauseCount++ },
+    modifier = modifier
+)
 }
 
 @Composable
@@ -101,7 +114,8 @@ fun FeedContent(
         )
 
         OutlinedTextField(
-             value = searchQuery,
+            value = searchQuery,
+    onValueChange = onSearchQueryChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -202,3 +216,4 @@ private fun FeedScreenPreview() {
         FeedScreen(articles = ArticleRepository.technologyArticles)
     }
 }
+
